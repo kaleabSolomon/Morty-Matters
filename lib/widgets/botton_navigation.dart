@@ -6,6 +6,8 @@ class BottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+        currentIndex: 1,
+        onTap: (index) {},
         selectedItemColor: const Color.fromARGB(255, 0, 255, 8),
         iconSize: 30,
         backgroundColor: const Color.fromARGB(255, 21, 21, 21),
