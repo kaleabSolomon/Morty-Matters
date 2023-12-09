@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rickandmorty/widgets/appbar.dart';
+import 'package:rickandmorty/widgets/botton_navigation.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,25 +17,7 @@ class HomePage extends StatelessWidget {
                 colorFilter: ColorFilter.mode(
                     Colors.black.withOpacity(0.4), BlendMode.darken))),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color.fromARGB(255, 21, 21, 21),
-          items: const [
-            BottomNavigationBarItem(
-
-                // backgroundColor: Color.fromARGB(255, 11, 218, 18),
-                icon: Icon(
-                  Icons.home,
-                  color: Color.fromARGB(255, 11, 218, 18),
-                ),
-                label: ""),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.favorite,
-                color: Color.fromARGB(255, 11, 218, 18),
-              ),
-              label: "",
-            )
-          ]),
+      bottomNavigationBar: const BottomNavigation(),
     );
   }
 }
