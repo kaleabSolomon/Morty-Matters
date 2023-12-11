@@ -33,7 +33,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
         toolbarHeight: height,
-        backgroundColor: Color.fromARGB(255, 21, 21, 21),
+        backgroundColor: Color.fromARGB(255, 0, 0, 0),
       ),
     );
   }

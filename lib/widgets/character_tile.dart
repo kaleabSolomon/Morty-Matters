@@ -25,7 +25,7 @@ class CharacterTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           color: const Color.fromARGB(255, 39, 45, 39),
           border: Border.all(
-              width: 1, color: const Color.fromARGB(255, 1, 255, 9))),
+              width: 2, color: const Color.fromARGB(255, 1, 255, 9))),
       child: Row(
         children: [
           SizedBox(
@@ -49,7 +49,7 @@ class CharacterTile extends StatelessWidget {
                       ? const Color.fromARGB(255, 0, 255, 8)
                       : status == "Dead"
                           ? const Color.fromARGB(255, 255, 17, 0)
-                          : Colors.grey,
+                          : const Color.fromARGB(255, 64, 64, 64),
                 ),
               )
             ]),
@@ -73,12 +73,14 @@ class CharacterTile extends StatelessWidget {
                 Text(
                   gender,
                   style: const TextStyle(
-                    color: Colors.white,
-                  ),
+                      color: Color.fromARGB(255, 0, 255, 8),
+                      fontWeight: FontWeight.bold),
                 ),
                 Text(
                   species,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 0, 255, 8),
+                      fontWeight: FontWeight.bold),
                 )
               ],
             ),
