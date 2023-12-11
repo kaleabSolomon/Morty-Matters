@@ -23,11 +23,22 @@ class Character {
       required this.gender});
 
   factory Character.fromJSON(dynamic json) {
-    return Character(
-        name: json['name'] as String,
-        status: json['status'] as String,
-        species: json['species'] as String,
-        gender: json['gender'] as String,
-        image: json['image'] as String);
+    try {
+      return Character(
+          name: json['name'] as String,
+          status: json['status'] as String,
+          species: json['species'] as String,
+          gender: json['gender'] as String,
+          image: json['image'] as String);
+    } catch (e) {
+      print("Error creating character from JSON: $e");
+      return Character(
+        name: '',
+        image: '',
+        status: '',
+        species: '',
+        gender: '',
+      );
+    }
   }
 }
