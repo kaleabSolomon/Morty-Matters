@@ -7,7 +7,7 @@ import 'package:rickandmorty/widgets/appbar.dart';
 import 'package:rickandmorty/widgets/botton_navigation.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -33,7 +33,6 @@ class _HomePageState extends State<HomePage> {
       appBar: MyAppBar(height: MediaQuery.of(context).size.height * 0.08),
       body: Stack(children: [
         Container(
-          child: body,
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
               image: DecorationImage(
@@ -41,6 +40,7 @@ class _HomePageState extends State<HomePage> {
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.4), BlendMode.darken))),
+          child: body,
         ),
         BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
