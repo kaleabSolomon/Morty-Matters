@@ -27,7 +27,7 @@ class CharacterTile extends StatelessWidget {
           border: Border.all(
               width: 1, color: const Color.fromARGB(255, 1, 255, 9))),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             height: 90,
@@ -40,20 +40,34 @@ class CharacterTile extends StatelessWidget {
                   fit: BoxFit.cover,
                 )),
           ),
-          Stack(
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: Icon(
-                  Icons.circle,
-                  color: status == "Alive"
-                      ? const Color.fromARGB(255, 0, 255, 8)
-                      : status == "Dead"
-                          ? const Color.fromARGB(255, 255, 17, 0)
-                          : Colors.grey,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  maxLines: 2,
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 0, 255, 8),
+                      fontSize: 18,
+                      overflow: TextOverflow.ellipsis,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Get_Schwifty'),
                 ),
-              )
-            ],
+                Text(
+                  gender,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  species,
+                  style: TextStyle(color: Colors.white),
+                )
+              ],
+            ),
           )
         ],
       ),
