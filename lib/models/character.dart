@@ -9,6 +9,7 @@ image
 
 */
 class Character {
+  final int? id;
   final String name;
   final String image;
   final String status;
@@ -16,7 +17,8 @@ class Character {
   final String gender;
 
   Character(
-      {required this.name,
+      {this.id,
+      required this.name,
       required this.image,
       required this.status,
       required this.species,
@@ -25,6 +27,7 @@ class Character {
   factory Character.fromJSON(dynamic json) {
     try {
       return Character(
+          id: json['id'] as int,
           name: json['name'] as String,
           status: json['status'] as String,
           species: json['species'] as String,
@@ -33,6 +36,7 @@ class Character {
     } catch (e) {
       print("Error creating character from JSON: $e");
       return Character(
+        id: 0,
         name: '',
         image: '',
         status: '',
@@ -40,10 +44,5 @@ class Character {
         gender: '',
       );
     }
-  }
-  static List<Character> extractFetchedJson(List characters) {
-    return characters.map((character) {
-      return Character.fromJSON(character);
-    }).toList();
   }
 }
