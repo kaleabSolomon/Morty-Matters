@@ -27,21 +27,35 @@ class CharacterTile extends StatelessWidget {
           border: Border.all(
               width: 1, color: const Color.fromARGB(255, 1, 255, 9))),
       child: Row(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             height: 90,
             width: 90,
             // ignore: unnecessary_null_comparison
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.network(
-                  characterImage,
-                  fit: BoxFit.cover,
-                )),
+            child: Stack(children: [
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.network(
+                    characterImage,
+                    fit: BoxFit.cover,
+                  )),
+              Positioned(
+                top: 4,
+                right: 4,
+                child: Icon(
+                  size: 20,
+                  Icons.circle,
+                  color: status == "Alive"
+                      ? const Color.fromARGB(255, 0, 255, 8)
+                      : status == "Dead"
+                          ? const Color.fromARGB(255, 255, 17, 0)
+                          : Colors.grey,
+                ),
+              )
+            ]),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,17 +72,17 @@ class CharacterTile extends StatelessWidget {
                 ),
                 Text(
                   gender,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                   ),
                 ),
                 Text(
                   species,
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
     );
