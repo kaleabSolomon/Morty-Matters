@@ -17,26 +17,43 @@ class CharacterTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       margin: const EdgeInsets.all(5),
       width: MediaQuery.of(context).size.width * 0.9,
-      height: 150,
+      height: 120,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: const Color.fromARGB(255, 39, 45, 39),
           border: Border.all(
               width: 1, color: const Color.fromARGB(255, 1, 255, 9))),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            height: 120,
-            width: 120,
+          SizedBox(
+            height: 90,
+            width: 90,
             // ignore: unnecessary_null_comparison
-            child: characterImage != null
-                ? Image.network(
-                    characterImage,
-                    fit: BoxFit.cover,
-                  )
-                : Placeholder(),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.network(
+                  characterImage,
+                  fit: BoxFit.cover,
+                )),
+          ),
+          Stack(
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: Icon(
+                  Icons.circle,
+                  color: status == "Alive"
+                      ? const Color.fromARGB(255, 0, 255, 8)
+                      : status == "Dead"
+                          ? const Color.fromARGB(255, 255, 17, 0)
+                          : Colors.grey,
+                ),
+              )
+            ],
           )
         ],
       ),
