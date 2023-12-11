@@ -42,3 +42,9 @@ class Character {
     }
   }
 }
+
+List<Character> extractFetchedJson(List characters) {
+  return characters.map((character) {
+    return Character.fromJSON(character);
+  }).toList();
+}

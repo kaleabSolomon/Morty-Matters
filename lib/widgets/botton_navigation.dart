@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class BottomNavigation extends StatelessWidget {
-  const BottomNavigation({super.key});
+  BottomNavigation({super.key, required this.onIndexChanged});
+
+  final ValueChanged<int> onIndexChanged;
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-        currentIndex: 1,
-        onTap: (index) {},
+        currentIndex: 0,
+        onTap: onIndexChanged,
         selectedItemColor: const Color.fromARGB(255, 0, 255, 8),
         iconSize: 30,
         backgroundColor: const Color.fromARGB(255, 21, 21, 21),
