@@ -42,13 +42,6 @@ class _HomePageState extends State<HomePage> {
                       Colors.black.withOpacity(0.4), BlendMode.darken))),
           child: body,
         ),
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-          child: Container(
-            color: Colors
-                .transparent, // Transparent to ensure the blur only affects the background
-          ),
-        )
       ]),
       bottomNavigationBar: BottomNavigation(
         onIndexChanged: _onIndexChanged,
