@@ -30,6 +30,9 @@ class _CharacterPageState extends State<CharacterPage> {
     _fetchCharacters();
     _loadCharacters();
     _scrollController.addListener(_scrollListener);
+    // characters.forEach((element) {
+    //   print(element.name);
+    // });
   }
 
   @override
@@ -61,9 +64,13 @@ class _CharacterPageState extends State<CharacterPage> {
   }
 
   void _addToFavorites(int index) {
-    if (!favorites.contains(characters[index])) {
+    Character selectedCharacter = characters[index];
+
+    bool isInFavorites =
+        favorites.any((character) => character.id == selectedCharacter.id);
+    if (!isInFavorites) {
       setState(() {
-        favorites.add(characters[index]);
+        favorites.add(selectedCharacter);
       });
       _saveToFavorites();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -74,9 +81,14 @@ class _CharacterPageState extends State<CharacterPage> {
         backgroundColor: Color.fromARGB(255, 0, 255, 8),
       ));
     } else {
+      setState(() {
+        favorites
+            .removeWhere((character) => character.id == selectedCharacter.id);
+      });
+      _saveToFavorites();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
-          "Character Already in Favorites",
+          "Character removed from favorites",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.red,
@@ -84,7 +96,7 @@ class _CharacterPageState extends State<CharacterPage> {
     }
   }
 
-  Future<List<dynamic>> _loadCharacters() async {
+  void _loadCharacters() async {
     final SharedPreferences prefs = await _prefs;
     favList = prefs.getStringList('favorites')!;
     for (String jsonString in favList) {
@@ -94,8 +106,6 @@ class _CharacterPageState extends State<CharacterPage> {
     favorites.forEach((element) {
       print(element.name);
     });
-    // favorites = favList.map((item) => jsonDecode(item)).toList();
-    return favorites;
   }
 
   @override
@@ -131,7 +141,7 @@ class _CharacterPageState extends State<CharacterPage> {
                           color: Color.fromARGB(255, 0, 255, 8),
                         ),
                       )
-                    : SizedBox();
+                    : const SizedBox();
               }
             });
   }

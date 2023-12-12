@@ -56,4 +56,11 @@ class Character {
       "gender": gender
     };
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is Character && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
 }
