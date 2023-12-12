@@ -12,17 +12,36 @@ class CharacterPage extends StatefulWidget {
 class _CharacterPageState extends State<CharacterPage> {
   List<dynamic> characters = [];
   bool isLoading = true;
+  ScrollController _scrollController = ScrollController();
+  // ignore: prefer_final_fields
+  int _page = 1;
 
   @override
   initState() {
     super.initState();
-    fetchCharacters();
+    _fetchCharacters();
+    _scrollController.addListener(_scrollListener);
   }
 
-  Future<void> fetchCharacters() async {
-    characters = await CharacterApi.getCharacter();
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      _fetchCharacters();
+    }
+  }
+
+  Future<void> _fetchCharacters() async {
+    List<dynamic> characterList = await CharacterApi.getCharacter(_page);
+    characters.addAll(characterList);
     setState(() {
       isLoading = false;
+      _page++;
     });
   }
 
@@ -32,18 +51,30 @@ class _CharacterPageState extends State<CharacterPage> {
         ? const Center(
             child: CircularProgressIndicator(
               color: Color.fromARGB(255, 0, 255, 8),
-              strokeWidth: 6,
+              strokeWidth: 4,
             ),
           )
         : ListView.builder(
-            itemCount: characters.length,
+            controller: _scrollController,
+            itemCount: characters.length + 1,
             itemBuilder: (context, int index) {
-              return CharacterTile(
-                  name: characters[index].name,
-                  characterImage: characters[index].image,
-                  status: characters[index].status,
-                  species: characters[index].species,
-                  gender: characters[index].gender);
+              if (index < characters.length) {
+                return CharacterTile(
+                    name: characters[index].name,
+                    characterImage: characters[index].image,
+                    status: characters[index].status,
+                    species: characters[index].species,
+                    gender: characters[index].gender);
+              } else {
+                isLoading = true;
+                return isLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: Color.fromARGB(255, 0, 255, 8),
+                        ),
+                      )
+                    : SizedBox();
+              }
             });
   }
 }

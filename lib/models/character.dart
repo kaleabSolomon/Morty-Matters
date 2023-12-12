@@ -9,7 +9,7 @@ image
 
 */
 class Character {
-  final int? id;
+  final int id;
   final String name;
   final String image;
   final String status;
@@ -17,7 +17,7 @@ class Character {
   final String gender;
 
   Character(
-      {this.id,
+      {required this.id,
       required this.name,
       required this.image,
       required this.status,

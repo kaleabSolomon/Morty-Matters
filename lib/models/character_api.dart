@@ -4,8 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:rickandmorty/models/character.dart';
 
 class CharacterApi {
-  static Future<List<dynamic>> getCharacter() async {
-    var uri = Uri.parse('https://rickandmortyapi.com/api/character');
+  static Future<List<dynamic>> getCharacter(page) async {
+    List characterList = [];
+    var uri =
+        Uri.parse('https://rickandmortyapi.com/api/character/?page=$page');
     final fetchedJson = await http.get(uri);
     Map<String, dynamic> data = jsonDecode(fetchedJson.body);
 
@@ -13,12 +15,10 @@ class CharacterApi {
     List<Character> characters = charactersJson.map((charJson) {
       return Character.fromJSON(charJson);
     }).toList();
-    List characterList = [];
 
     characters.forEach((character) {
       characterList.add(character);
     });
     return characterList;
-    // return Character.extractFetchedJson(characterList);
   }
 }

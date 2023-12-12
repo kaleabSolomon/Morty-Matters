@@ -65,7 +65,7 @@ class CharacterTile extends StatelessWidget {
                   maxLines: 2,
                   style: const TextStyle(
                       color: Color.fromARGB(255, 0, 255, 8),
-                      fontSize: 18,
+                      fontSize: 16,
                       overflow: TextOverflow.ellipsis,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Get_Schwifty'),
