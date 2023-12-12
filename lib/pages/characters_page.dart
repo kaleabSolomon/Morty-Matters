@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:rickandmorty/models/character.dart';
 import 'package:rickandmorty/models/character_api.dart';
 import 'package:rickandmorty/widgets/character_tile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,8 +16,11 @@ class CharacterPage extends StatefulWidget {
 class _CharacterPageState extends State<CharacterPage> {
   List<dynamic> characters = [];
   List<dynamic> favorites = [];
+  List<String> favList = [];
   bool isLoading = true;
   ScrollController _scrollController = ScrollController();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   // ignore: prefer_final_fields
   int _page = 1;
 
@@ -24,6 +28,7 @@ class _CharacterPageState extends State<CharacterPage> {
   initState() {
     super.initState();
     _fetchCharacters();
+    _loadCharacters();
     _scrollController.addListener(_scrollListener);
   }
 
@@ -50,9 +55,8 @@ class _CharacterPageState extends State<CharacterPage> {
   }
 
   void _saveToFavorites() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final List<String> favList =
-        favorites.map((item) => jsonEncode(item.toJson())).toList();
+    final SharedPreferences prefs = await _prefs;
+    favList = favorites.map((item) => jsonEncode(item.toJson())).toList();
     await prefs.setStringList("favorites", favList);
   }
 
@@ -78,6 +82,20 @@ class _CharacterPageState extends State<CharacterPage> {
         backgroundColor: Colors.red,
       ));
     }
+  }
+
+  Future<List<dynamic>> _loadCharacters() async {
+    final SharedPreferences prefs = await _prefs;
+    favList = prefs.getStringList('favorites')!;
+    for (String jsonString in favList) {
+      Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+      favorites.add(Character.fromJSON(jsonMap));
+    }
+    favorites.forEach((element) {
+      print(element.name);
+    });
+    // favorites = favList.map((item) => jsonDecode(item)).toList();
+    return favorites;
   }
 
   @override
