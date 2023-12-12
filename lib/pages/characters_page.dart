@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:rickandmorty/models/character_api.dart';
 import 'package:rickandmorty/widgets/character_tile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CharacterPage extends StatefulWidget {
   const CharacterPage({super.key});
@@ -11,6 +14,7 @@ class CharacterPage extends StatefulWidget {
 
 class _CharacterPageState extends State<CharacterPage> {
   List<dynamic> characters = [];
+  List<dynamic> favorites = [];
   bool isLoading = true;
   ScrollController _scrollController = ScrollController();
   // ignore: prefer_final_fields
@@ -45,6 +49,37 @@ class _CharacterPageState extends State<CharacterPage> {
     });
   }
 
+  void _saveToFavorites() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String> favList =
+        favorites.map((item) => jsonEncode(item.toJson())).toList();
+    await prefs.setStringList("favorites", favList);
+  }
+
+  void _addToFavorites(int index) {
+    if (!favorites.contains(characters[index])) {
+      setState(() {
+        favorites.add(characters[index]);
+      });
+      _saveToFavorites();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          "Character Added To Favorites",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color.fromARGB(255, 0, 255, 8),
+      ));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          "Character Already in Favorites",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return isLoading
@@ -59,12 +94,17 @@ class _CharacterPageState extends State<CharacterPage> {
             itemCount: characters.length + 1,
             itemBuilder: (context, int index) {
               if (index < characters.length) {
-                return CharacterTile(
-                    name: characters[index].name,
-                    characterImage: characters[index].image,
-                    status: characters[index].status,
-                    species: characters[index].species,
-                    gender: characters[index].gender);
+                return GestureDetector(
+                  onDoubleTap: () {
+                    _addToFavorites(index);
+                  },
+                  child: CharacterTile(
+                      name: characters[index].name,
+                      characterImage: characters[index].image,
+                      status: characters[index].status,
+                      species: characters[index].species,
+                      gender: characters[index].gender),
+                );
               } else {
                 isLoading = true;
                 return isLoading

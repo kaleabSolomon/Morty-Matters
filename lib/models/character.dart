@@ -45,4 +45,15 @@ class Character {
       );
     }
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "name": name,
+      "image": image,
+      "status": status,
+      "species": species,
+      "gender": gender
+    };
+  }
 }
