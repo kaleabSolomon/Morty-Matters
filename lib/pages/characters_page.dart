@@ -30,9 +30,6 @@ class _CharacterPageState extends State<CharacterPage> {
     _fetchCharacters();
     _loadCharacters();
     _scrollController.addListener(_scrollListener);
-    // characters.forEach((element) {
-    //   print(element.name);
-    // });
   }
 
   @override
@@ -103,9 +100,6 @@ class _CharacterPageState extends State<CharacterPage> {
       Map<String, dynamic> jsonMap = jsonDecode(jsonString);
       favorites.add(Character.fromJSON(jsonMap));
     }
-    favorites.forEach((element) {
-      print(element.name);
-    });
   }
 
   @override
