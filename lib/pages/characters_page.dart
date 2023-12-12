@@ -18,7 +18,7 @@ class _CharacterPageState extends State<CharacterPage> {
   List<dynamic> favorites = [];
   List<String> favList = [];
   bool isLoading = true;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   // ignore: prefer_final_fields
@@ -95,7 +95,7 @@ class _CharacterPageState extends State<CharacterPage> {
 
   void _loadCharacters() async {
     final SharedPreferences prefs = await _prefs;
-    favList = prefs.getStringList('favorites')!;
+    favList = prefs.getStringList('favorites') ?? [];
     for (String jsonString in favList) {
       Map<String, dynamic> jsonMap = jsonDecode(jsonString);
       favorites.add(Character.fromJSON(jsonMap));
