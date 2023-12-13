@@ -63,4 +63,9 @@ class Character {
 
   @override
   int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    return "{\n  id: $id,\n  name: $name,\n  image: $image,\n  status: $status,\n  species: $species,\n  gender: $gender\n}";
+  }
 }

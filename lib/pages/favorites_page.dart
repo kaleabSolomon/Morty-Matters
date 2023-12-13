@@ -33,6 +33,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
         favorites.add(Character.fromJSON(jsonMap));
       }
     });
+
+    favorites.forEach((favChar) => print(favChar.toString()));
   }
 
   void _saveToFavorites() async {
