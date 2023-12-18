@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rickandmorty/pages/characters_page.dart';
 import 'package:rickandmorty/pages/favorites_page.dart';
 import 'package:rickandmorty/widgets/appbar.dart';
-import 'package:rickandmorty/widgets/botton_navigation.dart';
+import 'package:rickandmorty/widgets/bottom_navigation.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
